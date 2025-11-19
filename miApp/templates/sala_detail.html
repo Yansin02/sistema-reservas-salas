@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ sala.nombre }} - Detalles{% endblock %}
+
+{% block content %}
+<a href="{% url 'miApp:home' %}" class="btn" style="margin-bottom: 2rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+    ← Volver a Salas
+</a>
+
+<div style="background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+    <div style="display: flex; justify-content: between; align-items: start; margin-bottom: 2rem;">
+        <div>
+            <h1 style="color: #333; margin-bottom: 0.5rem;">{{ sala.nombre }}</h1>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <span style="background: #17a2b8; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.9rem;">
+                    Capacidad: {{ sala.capacidad }} personas
+                </span>
+                <span style="background: #6c757d; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.9rem;">
+                    Estado: {{ sala.estado }}
+                </span>
+                {% if sala.disponible %}
+                <span style="background: #28a745; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.9rem;">
+                    Disponible
+                </span>
+                {% else %}
+                <span style="background: #dc3545; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.9rem;">
+                    No Disponible
+                </span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px;">
+            <h3 style="color: #333; margin-bottom: 1rem;">📋 Información General</h3>
+            <p><strong>Nombre:</strong> {{ sala.nombre }}</p>
+            <p><strong>Capacidad:</strong> {{ sala.capacidad }} personas</p>
+            <p><strong>Estado:</strong> {{ sala.estado }}</p>
+            <p><strong>Disponible:</strong> {{ sala.disponible|yesno:"Sí,No" }}</p>
+            <p><strong>Habilitada:</strong> {{ sala.habilitada|yesno:"Sí,No" }}</p>
+        </div>
+        
+        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px;">
+            <h3 style="color: #333; margin-bottom: 1rem;">💡 Características</h3>
+            <p>✅ Espacio climatizado</p>
+            <p>✅ Proyector disponible</p>
+            <p>✅ Wi-Fi de alta velocidad</p>
+            <p>✅ Servicio de café</p>
+            <p>✅ Soporte técnico</p>
+        </div>
+    </div>
+
+    <div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; color: white;">
+        <h2 style="margin-bottom: 1rem;">¿Te interesa esta sala?</h2>
+        <p style="margin-bottom: 2rem; opacity: 0.9;">Reserva ahora y asegura tu espacio para la fecha que necesites.</p>
+        <a href="{% url 'miApp:reservar_sala' sala.id %}" class="btn" style="background: white; color: #667eea; font-weight: bold; padding: 1rem 2rem;">
+            Reservar Esta Sala
+        </a>
+    </div>
+</div>
+{% endblock %}

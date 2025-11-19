@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Reserva Exitosa{% endblock %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 0 auto; text-align: center;">
+    <div style="background: white; border-radius: 10px; padding: 3rem 2rem; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+        
+        <h1 style="color: #28a745; margin-bottom: 1rem;">¡Reserva Confirmada!</h1>
+        
+        <p style="color: #666; margin-bottom: 2rem; font-size: 1.1rem;">
+            Tu reserva ha sido procesada exitosamente. Hemos enviado un correo de confirmación con todos los detalles.
+        </p>
+
+        <div style="background: #d4edda; color: #155724; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+            <h3 style="margin-bottom: 0.5rem;">📧 Confirmación Enviada</h3>
+            <p style="margin: 0;">Hemos enviado los detalles de tu reserva al email proporcionado.</p>
+        </div>
+
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+            <a href="{% url 'miApp:home' %}" class="btn" style="padding: 0.8rem 1.5rem;">
+                🏠 Volver al Inicio
+            </a>
+            <a href="#" class="btn btn-success" style="padding: 0.8rem 1.5rem;">
+                📋 Ver Mis Reservas
+            </a>
+        </div>
+
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e9ecef;">
+            <p style="color: #888; font-size: 0.9rem;">
+                ¿Tienes alguna pregunta? <a href="#" style="color: #007bff;">Contáctanos</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
