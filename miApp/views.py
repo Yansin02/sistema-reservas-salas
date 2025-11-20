@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Sala, Reserva
+from .forms import ReservaForm
 from django.utils import timezone
+from datetime import timedelta
 
 def home(request):
     """
@@ -29,21 +31,19 @@ def reservar_sala(request, sala_id):
     sala = get_object_or_404(Sala, id=sala_id, disponible=True)
     
     if request.method == 'POST':
-        # Procesar el formulario de reserva
-        nombre_cliente = request.POST.get('nombre')
+        rut_persona = request.POST.get('rut')
+        nombre_completo = request.POST.get('nombre')
         email = request.POST.get('email')
         telefono = request.POST.get('telefono')
-        fecha_reserva = request.POST.get('fecha')
-        horas_contratadas = request.POST.get('horas', 1)
         
-        # Crear la reserva
+        # Crear la reserva (fecha_hora_inicio se crea automáticamente)
+        # fecha_hora_termino se calcula en el método save() del modelo
         reserva = Reserva.objects.create(
             sala=sala,
-            nombre_cliente=nombre_cliente,
+            rut_persona=rut_persona,
+            nombre_completo=nombre_completo,
             email=email,
-            telefono=telefono,
-            fecha_reserva=fecha_reserva,
-            horas_contratadas=horas_contratadas
+            telefono=telefono
         )
         
         return redirect('miApp:reserva_exitosa')

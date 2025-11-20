@@ -12,6 +12,9 @@
         <div style="text-align: center; margin-bottom: 2rem;">
             <h1 style="color: #333; margin-bottom: 0.5rem;">📅 Reservar Sala</h1>
             <p style="color: #666;">Estás reservando: <strong>{{ sala.nombre }}</strong></p>
+            <p style="color: #888; font-size: 0.9rem; background: #f8f9fa; padding: 0.5rem; border-radius: 5px;">
+                ⏱️ Duración: 2 horas (máximo)
+            </p>
         </div>
 
         <form method="POST">
@@ -19,11 +22,23 @@
             
             <div style="margin-bottom: 1.5rem;">
                 <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">
+                    🆔 RUT
+                </label>
+                <input type="text" name="rut" required 
+                       style="width: 100%; padding: 0.8rem; border: 2px solid #e9ecef; border-radius: 5px; font-size: 1rem;"
+                       placeholder="12.345.678-9"
+                       pattern="^\d{1,2}\.\d{3}\.\d{3}-[0-9kK]{1}$"
+                       title="Formato: 12.345.678-9">
+                <small style="color: #666; font-size: 0.8rem;">Formato: 12.345.678-9</small>
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">
                     👤 Nombre Completo
                 </label>
                 <input type="text" name="nombre" required 
                        style="width: 100%; padding: 0.8rem; border: 2px solid #e9ecef; border-radius: 5px; font-size: 1rem;"
-                       placeholder="Ingresa tu nombre completo">
+                       placeholder="Nombre Apellido">
             </div>
 
             <div style="margin-bottom: 1.5rem;">
@@ -32,45 +47,29 @@
                 </label>
                 <input type="email" name="email" required 
                        style="width: 100%; padding: 0.8rem; border: 2px solid #e9ecef; border-radius: 5px; font-size: 1rem;"
-                       placeholder="tu@email.com">
+                       placeholder="correo@ejemplo.com">
             </div>
 
             <div style="margin-bottom: 1.5rem;">
                 <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">
-                    📞 Teléfono
+                    📞 Teléfono (Opcional)
                 </label>
                 <input type="tel" name="telefono" 
                        style="width: 100%; padding: 0.8rem; border: 2px solid #e9ecef; border-radius: 5px; font-size: 1rem;"
                        placeholder="+56 9 1234 5678">
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
-                <div>
-                    <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">
-                        🗓️ Fecha y Hora
-                    </label>
-                    <input type="datetime-local" name="fecha" required 
-                           style="width: 100%; padding: 0.8rem; border: 2px solid #e9ecef; border-radius: 5px; font-size: 1rem;">
-                </div>
-                
-                <div>
-                    <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">
-                        ⏱️ Horas
-                    </label>
-                    <input type="number" name="horas" value="1" min="1" max="24" 
-                           style="width: 100%; padding: 0.8rem; border: 2px solid #e9ecef; border-radius: 5px; font-size: 1rem;">
-                </div>
-            </div>
-
             <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
                 <h3 style="color: #333; margin-bottom: 1rem;">📝 Resumen de Reserva</h3>
                 <p><strong>Sala:</strong> {{ sala.nombre }}</p>
                 <p><strong>Capacidad:</strong> {{ sala.capacidad }} personas</p>
-                <p><strong>Estado:</strong> {{ sala.estado }}</p>
+                <p><strong>Duración:</strong> 2 horas</p>
+                <p><strong>Inicio:</strong> Al confirmar la reserva</p>
+                <p><strong>Término:</strong> 2 horas después del inicio</p>
             </div>
 
             <button type="submit" class="btn btn-success" style="width: 100%; padding: 1rem; font-size: 1.1rem;">
-                ✅ Confirmar Reserva
+                ✅ Confirmar Reserva por 2 Horas
             </button>
         </form>
     </div>

@@ -9,6 +9,8 @@ class SalaAdmin(admin.ModelAdmin):
 
 @admin.register(Reserva)
 class ReservaAdmin(admin.ModelAdmin):
-    list_display = ['id', 'sala', 'nombre_cliente', 'email', 'fecha_reserva', 'estado']
-    list_filter = ['sala', 'estado', 'fecha_reserva']
-    search_fields = ['nombre_cliente', 'email']
+    list_display = ['id', 'rut_persona', 'nombre_completo', 'sala', 'fecha_hora_inicio', 'fecha_hora_termino', 'estado']
+    list_filter = ['sala', 'estado', 'fecha_hora_inicio']
+    search_fields = ['rut_persona', 'nombre_completo', 'email']
+    readonly_fields = ['fecha_hora_inicio', 'fecha_hora_termino']
+    date_hierarchy = 'fecha_hora_inicio'
