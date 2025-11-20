@@ -4,16 +4,20 @@ Django settings for miProyecto project.
 
 import os
 from pathlib import Path
-from decouple import config  
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Inicializar environ CON RUTA EXPLÍCITA AL .env
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # ← RUTA EXPLÍCITA
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')  # ← CAMBIAR
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)  # ← CAMBIAR
+DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = []
 
@@ -58,16 +62,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'miProyecto.wsgi.application'
 
-# Database - POSTGRESQL DIRECTO
+# Database - POSTGRESQL CON django-environ
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),           
-        'USER': config('DB_USER'),            
-        'PASSWORD': config('DB_PASSWORD'),   
-        'HOST': config('DB_HOST'),           
-        'PORT': config('DB_PORT'),           
-    }
+    'default': env.db('DATABASE_URL', default='postgresql://postgres:admin123@localhost:5432/prueba3')
 }
 
 # Password validation
