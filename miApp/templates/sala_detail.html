@@ -3,6 +3,7 @@
 {% block title %}{{ sala.nombre }} - Detalles{% endblock %}
 
 {% block content %}
+
 <a href="{% url 'miApp:home' %}" class="btn" style="margin-bottom: 2rem; display: inline-flex; align-items: center; gap: 0.5rem;">
     ← Volver a Salas
 </a>
@@ -45,8 +46,8 @@
                 <p style="margin: 0.5rem 0;"><strong>🆔 RUT:</strong> {{ reserva_activa.rut_persona }}</p>
             </div>
             <div>
-                <p style="margin: 0.5rem 0;"><strong>🕐 Inicio:</strong> {{ reserva_activa.fecha_hora_inicio|date:"d/m/Y H:i" }}</p>
-                <p style="margin: 0.5rem 0;"><strong>🕒 Término:</strong> {{ reserva_activa.fecha_hora_termino|date:"d/m/Y H:i" }}</p>
+                <p style="margin: 0.5rem 0;"><strong>🕐 Inicio:</strong> {{ reserva_activa.fecha_hora_inicio|date:"d/m/Y H:i" }} (hora Chile)</p>
+                <p style="margin: 0.5rem 0;"><strong>🕒 Término:</strong> {{ reserva_activa.fecha_hora_termino|date:"d/m/Y H:i" }} (hora Chile)</p>
             </div>
         </div>
         <p style="margin-top: 1rem; color: #856404; font-size: 0.9rem;">

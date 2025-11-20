@@ -18,18 +18,15 @@ def detalle_sala(request, sala_id):
     """
     sala = get_object_or_404(Sala, id=sala_id)
     
-    # Buscar reserva activa (confirmada y que no haya terminado)
-    ahora = timezone.now()
+    # Buscar reserva activa (confirmada o pendiente)
     reserva_activa = Reserva.objects.filter(
         sala=sala, 
-        estado='confirmada',
-        fecha_hora_termino__gt=ahora  # Mayor que ahora
+        estado__in=['confirmada', 'pendiente']
     ).first()
     
     context = {
         'sala': sala,
-        'reserva_activa': reserva_activa,  # ← NUEVO
-        'ahora': ahora  # ← NUEVO (para referencia)
+        'reserva_activa': reserva_activa,
     }
     return render(request, 'sala_detail.html', context)
 
@@ -45,7 +42,7 @@ def reservar_sala(request, sala_id):
         email = request.POST.get('email')
         telefono = request.POST.get('telefono')
         
-        # Crear la reserva (automáticamente en estado 'pendiente')
+        # Crear la reserva
         reserva = Reserva.objects.create(
             sala=sala,
             rut_persona=rut_persona,
