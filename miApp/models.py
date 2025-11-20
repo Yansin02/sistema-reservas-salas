@@ -19,7 +19,7 @@ class Reserva(models.Model):
         ('cancelada', 'Cancelada'),
     ]
     
-    rut_persona = models.CharField(max_length=12, verbose_name="RUT")
+    rut_persona = models.CharField(max_length=12, verbose_name="RUT", default="11111111-1")
     nombre_completo = models.CharField(max_length=100)
     email = models.EmailField()
     telefono = models.CharField(max_length=15, blank=True)

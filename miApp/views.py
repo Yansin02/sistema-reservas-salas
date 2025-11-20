@@ -1,14 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Sala, Reserva
-from .forms import ReservaForm
 from django.utils import timezone
-from datetime import timedelta
 
 def home(request):
     """
     Vista para la página principal
     """
-    salas = Sala.objects.filter(disponible=True)
+    salas = Sala.objects.filter(disponible=True).order_by('nombre')
     context = {
         'salas': salas
     }
@@ -18,9 +16,20 @@ def detalle_sala(request, sala_id):
     """
     Vista para mostrar los detalles de una sala
     """
-    sala = get_object_or_404(Sala, id=sala_id, disponible=True)
+    sala = get_object_or_404(Sala, id=sala_id)
+    
+    # Buscar reserva activa (confirmada y que no haya terminado)
+    ahora = timezone.now()
+    reserva_activa = Reserva.objects.filter(
+        sala=sala, 
+        estado='confirmada',
+        fecha_hora_termino__gt=ahora  # Mayor que ahora
+    ).first()
+    
     context = {
-        'sala': sala
+        'sala': sala,
+        'reserva_activa': reserva_activa,  # ← NUEVO
+        'ahora': ahora  # ← NUEVO (para referencia)
     }
     return render(request, 'sala_detail.html', context)
 
@@ -36,8 +45,7 @@ def reservar_sala(request, sala_id):
         email = request.POST.get('email')
         telefono = request.POST.get('telefono')
         
-        # Crear la reserva (fecha_hora_inicio se crea automáticamente)
-        # fecha_hora_termino se calcula en el método save() del modelo
+        # Crear la reserva (automáticamente en estado 'pendiente')
         reserva = Reserva.objects.create(
             sala=sala,
             rut_persona=rut_persona,

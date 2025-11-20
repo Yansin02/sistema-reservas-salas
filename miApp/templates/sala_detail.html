@@ -18,18 +18,42 @@
                 <span style="background: #6c757d; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.9rem;">
                     Estado: {{ sala.estado }}
                 </span>
-                {% if sala.disponible %}
+                
+                <!-- MOSTRAR DISPONIBILIDAD -->
+                {% if sala.disponible and not reserva_activa %}
                 <span style="background: #28a745; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.9rem;">
-                    Disponible
+                    ✅ Disponible
                 </span>
                 {% else %}
                 <span style="background: #dc3545; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.9rem;">
-                    No Disponible
+                    ⏰ Reservada
                 </span>
                 {% endif %}
             </div>
         </div>
     </div>
+
+    <!-- SECCIÓN DE RESERVA ACTIVA -->
+    {% if reserva_activa %}
+    <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem;">
+        <h3 style="color: #856404; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+            ⏰ Sala Actualmente Reservada
+        </h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div>
+                <p style="margin: 0.5rem 0;"><strong>👤 Persona:</strong> {{ reserva_activa.nombre_completo }}</p>
+                <p style="margin: 0.5rem 0;"><strong>🆔 RUT:</strong> {{ reserva_activa.rut_persona }}</p>
+            </div>
+            <div>
+                <p style="margin: 0.5rem 0;"><strong>🕐 Inicio:</strong> {{ reserva_activa.fecha_hora_inicio|date:"d/m/Y H:i" }}</p>
+                <p style="margin: 0.5rem 0;"><strong>🕒 Término:</strong> {{ reserva_activa.fecha_hora_termino|date:"d/m/Y H:i" }}</p>
+            </div>
+        </div>
+        <p style="margin-top: 1rem; color: #856404; font-size: 0.9rem;">
+            <strong>Nota:</strong> La sala estará disponible después de la hora de término.
+        </p>
+    </div>
+    {% endif %}
 
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
         <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px;">
@@ -51,12 +75,20 @@
         </div>
     </div>
 
+    <!-- BOTÓN DE RESERVA SOLO SI ESTÁ DISPONIBLE -->
+    {% if sala.disponible and not reserva_activa %}
     <div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; color: white;">
         <h2 style="margin-bottom: 1rem;">¿Te interesa esta sala?</h2>
-        <p style="margin-bottom: 2rem; opacity: 0.9;">Reserva ahora y asegura tu espacio para la fecha que necesites.</p>
+        <p style="margin-bottom: 2rem; opacity: 0.9;">Reserva ahora y asegura tu espacio por 2 horas.</p>
         <a href="{% url 'miApp:reservar_sala' sala.id %}" class="btn" style="background: white; color: #667eea; font-weight: bold; padding: 1rem 2rem;">
             Reservar Esta Sala
         </a>
     </div>
+    {% else %}
+    <div style="text-align: center; padding: 2rem; background: #f8f9fa; border-radius: 10px;">
+        <h3 style="color: #666; margin-bottom: 1rem;">⏳ Sala No Disponible</h3>
+        <p style="color: #888;">Esta sala está actualmente reservada. Intenta más tarde.</p>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
